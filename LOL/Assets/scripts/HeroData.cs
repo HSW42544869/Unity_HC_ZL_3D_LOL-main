@@ -1,6 +1,11 @@
 ﻿using UnityEngine;
+
+//ScriptableObject
+//腳本畫物件，將腳本變為物件存放在專案內方便管理
+
+
 [CreateAssetMenu(fileName = "英雄資料", menuName = "Wie/英雄資料")]
-public class NewBehaviourScript : ScriptableObject
+public class HeroData: ScriptableObject
 {
     //血量
     [Header("HP"), Range(100, 800)]
@@ -19,9 +24,11 @@ public class NewBehaviourScript : ScriptableObject
     [Header("技能表")]
     public skill[] skills;
 }
+//序列畫:
 [System.Serializable]
 public class skill
 {
+    public string Name;
     [Header("攻擊"), Range(10, 100)]
     public float attack;
     [Header("消耗"), Range(10, 100)]

@@ -9,10 +9,32 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 0}
+  m_Script: {fileID: 11500000, guid: b9176aa8af9f3fb489e1dfe4df0ef7bd, type: 3}
   m_Name: "\u9A37\u5BF6"
   m_EditorClassIdentifier: Assembly-CSharp::NewBehaviourScript
-  HP: 300
-  MP: 60
-  attack: 30
-  speed: 3.5
+  HP: 400
+  MP: 140
+  attack: 37.2
+  speed: 27.9
+  cd: 14.1
+  skills:
+  - Name: "\u81F4\u547D\u6253\u64CA"
+    attack: 17.2
+    cost: 10
+    image: {fileID: 21300000, guid: 396ba6756635e964aa91f7852c958c62, type: 3}
+    cd: 9
+  - Name: "\u52C7\u6C23"
+    attack: 24
+    cost: 11
+    image: {fileID: 21300000, guid: 31fee0b0e7226b04cbb17e25eaf81919, type: 3}
+    cd: 9
+  - Name: "\u5BE9\u5224"
+    attack: 22
+    cost: 10
+    image: {fileID: 21300000, guid: e6a93e4a42430f24680a85258760ae07, type: 3}
+    cd: 12
+  - Name: "\u9A37\u5230\u7206"
+    attack: 50
+    cost: 20
+    image: {fileID: 21300000, guid: 069988953ec33dd4aa252ef4a8306045, type: 3}
+    cd: 55
