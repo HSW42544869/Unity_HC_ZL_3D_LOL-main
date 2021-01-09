@@ -6,14 +6,17 @@ public class HeroBase : MonoBehaviour
     public HeroData Data;
 
     private Animator ani;
-    private float[] skillTime = new float[4];
-    private bool[] skillstart = new bool[4];
+    protected float[] skillTimer = new float[4];
+    protected bool[] skillStart = new bool[4];
+
+    private Rigidbody rig;
 
     protected virtual void Awake()
     {
         ani = GetComponent<Animator>();
+        rig = GetComponent<Rigidbody>();
     }
-    private void Update()
+    protected virtual void Update()
     {
         TimerControl();
     }
@@ -22,47 +25,53 @@ public class HeroBase : MonoBehaviour
     {
         for (int i = 0; i < 4; i++)
         {
-            if (skillstart[i])
+            if (skillStart[i])
             {
-                skillTime[i] += Time.deltaTime;
+                skillTimer[i] += Time.deltaTime;
 
 
-                if (skillTime[i] >= Data.skills[i].cd)
+                if (skillTimer[i] >= Data.skills[i].cd)
                 {
-                    skillTime[i] = 0;
-                    skillstart[i] = false;
+                    skillTimer[i] = 0;
+                    skillStart[i] = false;
                 }
             }
         }
 
     }
-    public void Move()
+    public void Move(Transform target)
     {
+        Vector3 pos = rig.position;
 
+        rig.MovePosition(target.position);
+
+        transform.LookAt(target);
+
+        ani.SetBool("跑步", rig.position != pos);
     }
     public void skill1()
     {
-        if (skillstart[0]) return;
+        if (skillStart[0]) return;
         ani.SetTrigger("大");
-        skillstart[0] = true;
+        skillStart[0] = true;
     }
     public void skill2()
     {
-        if (skillstart[1]) return;
+        if (skillStart[1]) return;
         ani.SetTrigger("一招");
-        skillstart[1] = true;
+        skillStart[1] = true;
     }
     public void skill3()
     {
-        if (skillstart[2]) return;
+        if (skillStart[2]) return;
         ani.SetTrigger("二招");
-        skillstart[2] = true;
+        skillStart[2] = true;
     }
     public void skill4()
     {
-        if (skillstart[3]) return;
+        if (skillStart[3]) return;
         ani.SetTrigger("打");
-        skillstart[3] = true;
+        skillStart[3] = true;
     }
 
 }
