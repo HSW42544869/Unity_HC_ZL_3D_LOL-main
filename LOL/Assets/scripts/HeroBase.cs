@@ -26,6 +26,10 @@ public class HeroBase : MonoBehaviour
         ani = GetComponent<Animator>();
         rig = GetComponent<Rigidbody>();
     }
+    public void Damage(float damage)
+    {
+        data.HP -= damage;
+    }
     protected virtual void Update()
     {
         TimerControl();
