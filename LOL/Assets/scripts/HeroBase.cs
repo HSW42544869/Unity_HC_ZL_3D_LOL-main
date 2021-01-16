@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 
 public class HeroBase : MonoBehaviour
 {
@@ -18,6 +19,23 @@ public class HeroBase : MonoBehaviour
     protected bool[] skillStart = new bool[4];
 
     private Rigidbody rig;
+    public float hp;
+    /// <summary>
+    /// 畫布血條
+    /// </summary>
+    [Header("圖層")]
+    public int layer;
+    [Header("重生點")]
+    public Transform restart;
+    /// <summary>
+    /// 騷寶血條
+    /// </summary>
+    private Transform canvasHP;
+    private Text texthp;
+    private Image imgHp;
+    private float hpMax;
+
+
 
     //protected 保護 - 允許子類別存取
     //virtual 虛擬 - 允許子類別複製
@@ -25,11 +43,47 @@ public class HeroBase : MonoBehaviour
     {
         ani = GetComponent<Animator>();
         rig = GetComponent<Rigidbody>();
+        //取得騷寶並更新血條文字
+        canvasHP = transform.Find("騷寶血條");
+        texthp = canvasHP.Find("血條文字").GetComponent<Text>();
+        texthp.text = data.HP.ToString();
+        imgHp = canvasHP.Find("血條").GetComponent<Image>();
+    }
+    public float restatrtTime = 3;
+    public void Dead()
+    {
+        hp = 0;
+        enabled = false;
+        ani.SetBool("死亡開關", true);
+        gameObject.layer = 0;
+
+        Invoke("Restart", restatrtTime);
+    }
+    public void Start()
+    {
+        hp = data.HP;
+        hpMax = hp;
+
+    }
+    private void Restart()
+    {
+        hp = hpMax;
+        texthp.text = hp.ToString();
+        imgHp.fillAmount = 1;
+        enabled = true;
+        transform.position = restart.position;
+        gameObject.layer = 0;
+        ani.SetBool("死亡開關", false);
     }
     public void Damage(float damage)
     {
-        data.HP -= damage;
+        hp -= damage;
+        texthp.text = hp.ToString();
+        imgHp.fillAmount = hp / hpMax;
+
+        if (hp <= 0) Dead();
     }
+    public float restartTime = 3;
     protected virtual void Update()
     {
         TimerControl();
@@ -59,6 +113,7 @@ public class HeroBase : MonoBehaviour
     /// <param name="target"></param>
     public void Move(Transform target)
     {
+        
         Vector3 pos = rig.position;
 
         //鋼體.移動座標(座標)
@@ -67,6 +122,7 @@ public class HeroBase : MonoBehaviour
         transform.LookAt(target);
         //動畫.設定布林值(跑步參數，現在座標 不等於 前面座標)
         ani.SetBool("跑步", rig.position != pos);
+        canvasHP.eulerAngles = new Vector3(67.7f, 249.048f, 0);
     }
     public void Skill1()
     {
