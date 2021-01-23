@@ -17,6 +17,10 @@ public class HeroBase : MonoBehaviour
     /// 技能是否開始
     /// </summary>
     protected bool[] skillStart = new bool[4];
+    /// <summary>
+    /// 普攻計時器
+    /// </summary>
+    protected float timer;
 
     private Rigidbody rig;
     public float hp;
@@ -41,6 +45,7 @@ public class HeroBase : MonoBehaviour
     //virtual 虛擬 - 允許子類別複製
     protected virtual void Awake()
     {
+        hp = data.HP;
         ani = GetComponent<Animator>();
         rig = GetComponent<Rigidbody>();
         //取得騷寶並更新血條文字
@@ -50,14 +55,16 @@ public class HeroBase : MonoBehaviour
         imgHp = canvasHP.Find("血條").GetComponent<Image>();
     }
     public float restatrtTime = 3;
-    public void Dead()
+    protected void Dead(bool needRestart = true)
     {
         hp = 0;
         enabled = false;
         ani.SetBool("死亡開關", true);
         gameObject.layer = 0;
 
-        Invoke("Restart", restatrtTime);
+
+        if (needRestart) Invoke("Restart", restatrtTime);
+        else Destroy(gameObject, 1.5f);
     }
     public void Start()
     {
@@ -75,7 +82,7 @@ public class HeroBase : MonoBehaviour
         gameObject.layer = 0;
         ani.SetBool("死亡開關", false);
     }
-    public void Damage(float damage)
+    public virtual void Damage(float damage)
     {
         hp -= damage;
         texthp.text = hp.ToString();

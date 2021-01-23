@@ -1034,15 +1034,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   data: {fileID: 11400000, guid: 8a1762fcb09ce064198a85c1e4466c8a, type: 2}
-  hp: 0
-  layer: 8
+  hp: 2000
+  layer: 9
   restart: {fileID: 0}
   restatrtTime: 3
   restartTime: 3
   targetName: "\u57CE\u5821\u6575\u65B9\u4F4D\u5740"
   stopDistance: 5
   rangeAttack: 15
-  LayerEnemy: 0
+  LayerEnemy: 8
+  posAtkOffset: {x: 0, y: 1, z: 0}
+  lengthAttack: 4
 --- !u!195 &3495846498294515695
 NavMeshAgent:
   m_ObjectHideFlags: 0
