@@ -8,7 +8,7 @@ public class HeroBase : MonoBehaviour
     /// <summary>
     /// 動畫控制器
     /// </summary>
-    private Animator ani;
+    protected Animator ani;
     /// <summary>
     /// 技能計時器:累加時間用
     /// </summary>
@@ -30,7 +30,7 @@ public class HeroBase : MonoBehaviour
     /// <summary>
     /// 騷寶血條
     /// </summary>
-    private Transform canvasHP;
+    protected Transform canvasHP;
     private Text texthp;
     private Image imgHp;
     private float hpMax;
