@@ -44,7 +44,7 @@ public class HeroBase : MonoBehaviour
         ani = GetComponent<Animator>();
         rig = GetComponent<Rigidbody>();
         //取得騷寶並更新血條文字
-        canvasHP = transform.Find("騷寶血條");
+        canvasHP = transform.Find("畫布血條");
         texthp = canvasHP.Find("血條文字").GetComponent<Text>();
         texthp.text = data.HP.ToString();
         imgHp = canvasHP.Find("血條").GetComponent<Image>();
@@ -111,18 +111,14 @@ public class HeroBase : MonoBehaviour
     /// 移動
     /// </summary>
     /// <param name="target"></param>
-    public void Move(Transform target)
+    public virtual void Move(Transform target)
     {
-        
-        Vector3 pos = rig.position;
 
-        //鋼體.移動座標(座標)
-        rig.MovePosition(target.position);
-        //看向(目標物件)
-        transform.LookAt(target);
-        //動畫.設定布林值(跑步參數，現在座標 不等於 前面座標)
-        ani.SetBool("跑步", rig.position != pos);
-        canvasHP.eulerAngles = new Vector3(67.7f, 249.048f, 0);
+        Vector3 pos = rig.position;
+        rig.MovePosition(target.position);//鋼體.移動座標(座標)
+        transform.LookAt(target);//看向(目標物件)
+        ani.SetBool("跑步", rig.position != pos);//動畫.設定布林值(跑步參數，現在座標 不等於 前面座標)
+        canvasHP.eulerAngles = new Vector3(67.7f, 249.048f, 0);//角度不變
     }
     public void Skill1()
     {
